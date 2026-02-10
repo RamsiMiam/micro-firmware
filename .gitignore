@@ -3,6 +3,7 @@ build/
 
 # ESP-IDF
 sdkconfig.old
+managed_components/
 
 # IDEs
 .settings/
