@@ -6,10 +6,10 @@
 #include "imu.h"
 
 void app_main(void) {
-	int x = imu_init(SDA_GPIO, SCL_GPIO);
+	int x = imu_init(SDA_GPIO, SCL_GPIO, INT_MPU);
 	
     while (true) {
-        printf("Hello from app_main!\n");
-        sleep(1);
+        printf("Calibrado!\n");
+        sleep(10);
     }
 }

@@ -6,4 +6,5 @@ idf_component_register(
     REQUIRES
         bmi160
         i2cdev
+        esp_timer
 )
