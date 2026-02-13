@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include "../components/motor/motor.h"
 #include "env.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "imu.h"
-#include "motor_control.h"
 
 #define MAX_DUTY ((1 << 10) - 1) // 1023 para 10 bits
 

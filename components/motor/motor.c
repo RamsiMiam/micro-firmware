@@ -1,4 +1,5 @@
-#include "motor_control.h"
+#include "motor.h"
+
 #include "driver/ledc.h"
 #include "driver/pcnt.h"
 #include "esp_err.h"
@@ -9,6 +10,14 @@
 #include "hal/ledc_types.h"
 
 static bool pwm_timer_initialized = false;
+
+static inline int clamp_int(int value, int min, int max) {
+  if (value < min)
+    return min;
+  if (value > max)
+    return max;
+  return value;
+}
 
 static esp_err_t pwm_timer_init(void) {
   if (pwm_timer_initialized)
@@ -117,21 +126,36 @@ esp_err_t motor_init(motor_t *motor, int pin_IN1, int pin_IN2,
   return ESP_OK;
 }
 
-void motor_set_pwm(int pwm, ledc_channel_t channel_IN1,
-                   ledc_channel_t channel_IN2) {
+void motor_set_pwm(motor_t *motor, int pwm) {
+
+  if (motor == NULL)
+    return;
+
+  pwm = clamp_int(pwm, -1023, 1023);
+
   if (pwm > 0) {
-    ledc_set_duty(LEDC_LOW_SPEED_MODE, channel_IN2, 0);
-    ledc_set_duty(LEDC_LOW_SPEED_MODE, channel_IN1, pwm);
+    ledc_set_duty(LEDC_LOW_SPEED_MODE, motor->ch_in2, 0);
+    ledc_update_duty(LEDC_LOW_SPEED_MODE, motor->ch_in2);
+
+    ledc_set_duty(LEDC_LOW_SPEED_MODE, motor->ch_in1, pwm);
+    ledc_update_duty(LEDC_LOW_SPEED_MODE, motor->ch_in1);
 
   } else {
-    ledc_set_duty(LEDC_LOW_SPEED_MODE, channel_IN1, 0);
-    ledc_set_duty(LEDC_LOW_SPEED_MODE, channel_IN2, abs(pwm));
+    ledc_set_duty(LEDC_LOW_SPEED_MODE, motor->ch_in1, 0);
+    ledc_update_duty(LEDC_LOW_SPEED_MODE, motor->ch_in1);
+
+    ledc_set_duty(LEDC_LOW_SPEED_MODE, motor->ch_in2, -pwm);
+    ledc_update_duty(LEDC_LOW_SPEED_MODE, motor->ch_in2);
   }
 }
 
-float motor_get_speed_rpm(motor_t *motor, pcnt_unit_t unit, float dt) {
+float motor_get_speed_rpm(motor_t *motor, float dt) {
+
+  if (motor == NULL)
+    return 0.0f;
+
   int16_t current_count = 0;
-  pcnt_get_counter_value(unit, &current_count);
+  pcnt_get_counter_value(motor->pcnt_unit, &current_count);
 
   int32_t delta = current_count - motor->last_count;
   motor->last_count = current_count;
