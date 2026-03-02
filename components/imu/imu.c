@@ -54,7 +54,7 @@ static void imu_task(void *arg) {
       }
     }
 
-    ESP_LOGI(TAG_IMU, "Roll: %.2f Pitch: %.2f Yaw: %.2f", roll, pitch, yaw);
+    //ESP_LOGI(TAG_IMU, "Roll: %.2f Pitch: %.2f Yaw: %.2f", roll, pitch, yaw);
 
     vTaskDelay(pdMS_TO_TICKS(10));
   }

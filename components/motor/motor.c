@@ -8,6 +8,7 @@
 #include "freertos/projdefs.h"
 #include "freertos/task.h"
 #include "hal/ledc_types.h"
+#include <math.h>
 
 static bool pwm_timer_initialized = false;
 
@@ -100,9 +101,9 @@ static esp_err_t pcnt_init(int pin_A, int pin_B, pcnt_unit_t unit) {
   return ESP_OK;
 }
 
-esp_err_t motor_init(motor_t *motor, int pin_IN1, int pin_IN2,
+esp_err_t motor_init(motor_t *motor, int id, int pin_IN1, int pin_IN2,
                      ledc_channel_t channel_IN1, ledc_channel_t channel_IN2,
-                     int pin_A, int pin_B, pcnt_unit_t unit) {
+                     int pin_A, int pin_B, pcnt_unit_t unit, bool plot) {
 
   if (motor == NULL)
     return ESP_ERR_INVALID_ARG;
@@ -116,10 +117,11 @@ esp_err_t motor_init(motor_t *motor, int pin_IN1, int pin_IN2,
   if (err != ESP_OK)
     return err;
 
+  motor->id = id;
   motor->ch_in1 = channel_IN1;
   motor->ch_in2 = channel_IN2;
   motor->pcnt_unit = unit;
-  motor->last_count = 0;
+  motor->plot = plot;
 
   ESP_LOGI(TAG_MOTOR_CONTROL, "MOTOR OK!");
 
@@ -127,7 +129,6 @@ esp_err_t motor_init(motor_t *motor, int pin_IN1, int pin_IN2,
 }
 
 void motor_set_pwm(motor_t *motor, int pwm) {
-
   if (motor == NULL)
     return;
 
@@ -149,18 +150,17 @@ void motor_set_pwm(motor_t *motor, int pwm) {
   }
 }
 
-float motor_get_speed_rpm(motor_t *motor, float dt) {
-
+float motor_get_speed(motor_t *motor, float dt) {
   if (motor == NULL)
     return 0.0f;
 
   int16_t current_count = 0;
   pcnt_get_counter_value(motor->pcnt_unit, &current_count);
+  pcnt_counter_clear(motor->pcnt_unit);
 
-  int32_t delta = current_count - motor->last_count;
-  motor->last_count = current_count;
+  int32_t delta = current_count;
 
-  float rpm = (delta * 60.0f) / (COUNTS_PER_REV * dt);
+  float omega = (delta * 2.0f * M_PI) / (COUNTS_PER_REV * dt);
 
-  return rpm;
+  return omega;
 }

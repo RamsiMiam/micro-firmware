@@ -12,17 +12,18 @@ extern "C" {
 #define COUNTS_PER_REV 294.0f
 
 typedef struct {
+  int id;
   ledc_channel_t ch_in1;
   ledc_channel_t ch_in2;
   pcnt_unit_t pcnt_unit;
-
-  int32_t last_count;
+  bool plot;
 } motor_t;
 
-esp_err_t motor_init(motor_t *motor, int pin_IN1, int pin_IN2,
+esp_err_t motor_init(motor_t *motor, int id, int pin_IN1, int pin_IN2,
                      ledc_channel_t channel_IN1, ledc_channel_t channel_IN2,
-                     int pin_A, int pin_B, pcnt_unit_t unit);
+                     int pin_A, int pin_B, pcnt_unit_t unit, bool plot);
 void motor_set_pwm(motor_t *motor, int pwm);
+float motor_get_speed(motor_t *motor, float dt);
 
 #ifdef __cplusplus
 }
