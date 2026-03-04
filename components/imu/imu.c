@@ -54,7 +54,7 @@ static void imu_task(void *arg) {
       }
     }
 
-    //ESP_LOGI(TAG_IMU, "Roll: %.2f Pitch: %.2f Yaw: %.2f", roll, pitch, yaw);
+    // ESP_LOGI(TAG_IMU, "Roll: %.2f Pitch: %.2f Yaw: %.2f", roll, pitch, yaw);
 
     vTaskDelay(pdMS_TO_TICKS(10));
   }
@@ -178,5 +178,11 @@ float get_yaw(void) {
     xSemaphoreGive(imu_mutex);
   }
 
-  return y;
+  float theta = fmodf(y * (M_PI / 180.0f), 2.0f * M_PI);
+
+  if (theta < 0.0f) {
+    theta += 2.0f * M_PI;
+  }
+
+  return theta;
 };

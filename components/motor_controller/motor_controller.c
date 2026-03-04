@@ -18,6 +18,7 @@ static void motor_controller_task(void *arg) {
   float u;
   while (1) {
     float motor_speed = motor_get_speed(motor, dt);
+    motor->omega = motor_speed;
 
     float error = target_motor_speed[motor->id] - motor_speed;
     integral += error * dt;

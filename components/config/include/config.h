@@ -1,5 +1,8 @@
 #pragma once
 
+#define NUM_MOTORS 4
+#define R 0.0471f
+#define L 0.160f
 
 // BMI160
 #define SDA_GPIO 41
@@ -7,7 +10,6 @@
 #define INT_MPU 4
 
 // MOTOR
-
 #define MOTOR_1_IN1 40
 #define MOTOR_1_IN2 39
 #define MOTOR_1_CHANNEL_IN1 LEDC_CHANNEL_0
