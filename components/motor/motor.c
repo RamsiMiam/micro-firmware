@@ -121,6 +121,7 @@ esp_err_t motor_init(motor_t *motor, int id, int pin_IN1, int pin_IN2,
   motor->ch_in1 = channel_IN1;
   motor->ch_in2 = channel_IN2;
   motor->pcnt_unit = unit;
+  motor->omega = 0.0f;
   motor->plot = plot;
 
   ESP_LOGI(TAG_MOTOR_CONTROL, "MOTOR OK!");

@@ -6,13 +6,10 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/projdefs.h"
 #include "freertos/task.h"
-
 #include "odometry.h"
 
-#define MAX_DUTY ((1 << 10) - 1) // 1023 para 10 bits
-
 void app_main(void) {
-  odometry_init(1.0f, 1.0f);
+  odometry_init();
 
   while (true) {
 

@@ -16,6 +16,7 @@ typedef struct {
   ledc_channel_t ch_in1;
   ledc_channel_t ch_in2;
   pcnt_unit_t pcnt_unit;
+  volatile float omega;
   bool plot;
 } motor_t;
 

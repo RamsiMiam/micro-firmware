@@ -1,6 +1,8 @@
 #pragma once
 
 #define NUM_MOTORS 4
+#define R 0.0471f
+#define L 0.160f
 
 // BMI160
 #define SDA_GPIO 41
@@ -14,6 +16,7 @@
 #define MOTOR_1_CHANNEL_IN2 LEDC_CHANNEL_1
 #define MOTOR_1_A 6
 #define MOTOR_1_B 5
+#define MOTOR_1_UNIT PCNT_UNIT_0
 
 #define MOTOR_2_IN1 37
 #define MOTOR_2_IN2 38
@@ -21,6 +24,7 @@
 #define MOTOR_2_CHANNEL_IN2 LEDC_CHANNEL_3
 #define MOTOR_2_A 15
 #define MOTOR_2_B 7
+#define MOTOR_2_UNIT PCNT_UNIT_1
 
 #define MOTOR_3_IN1 0
 #define MOTOR_3_IN2 45
@@ -28,6 +32,7 @@
 #define MOTOR_3_CHANNEL_IN2 LEDC_CHANNEL_5
 #define MOTOR_3_A 20
 #define MOTOR_3_B 21
+#define MOTOR_3_UNIT PCNT_UNIT_2
 
 #define MOTOR_4_IN1 47
 #define MOTOR_4_IN2 48
@@ -35,3 +40,4 @@
 #define MOTOR_4_CHANNEL_IN2 LEDC_CHANNEL_7
 #define MOTOR_4_A 16
 #define MOTOR_4_B 17
+#define MOTOR_4_UNIT PCNT_UNIT_3
