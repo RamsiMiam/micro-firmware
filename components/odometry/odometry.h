@@ -13,7 +13,8 @@ typedef struct {
   volatile float theta;
 } pose_t;
 
-esp_err_t odometry_init(void);
+esp_err_t odometry_init(motor_t *motors);
+esp_err_t get_robot_pose(pose_t *pose);
 
 #ifdef __cplusplus
 }

@@ -9,11 +9,10 @@
 #include "odometry.h"
 
 void app_main(void) {
-  odometry_init();
+  //odometry_init();
 
   while (true) {
 
-    // printf("DATA,1000.0,1000.0,1000.0\n");
     vTaskDelay(pdMS_TO_TICKS(100));
   }
 }

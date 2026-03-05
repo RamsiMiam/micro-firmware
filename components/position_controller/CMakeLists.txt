@@ -3,5 +3,5 @@ idf_component_register(
         "position_controller.c"
     INCLUDE_DIRS
         "."
-    REQUIRES odometry motor_controller config
+    REQUIRES odometry motor_controller motor config
 )
