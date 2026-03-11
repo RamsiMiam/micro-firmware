@@ -6,10 +6,10 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/projdefs.h"
 #include "freertos/task.h"
-#include "odometry.h"
+#include "robot.h"
 
 void app_main(void) {
-  //odometry_init();
+  robot_init();
 
   while (true) {
 

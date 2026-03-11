@@ -180,9 +180,11 @@ float get_yaw(void) {
 
   float theta = fmodf(y * (M_PI / 180.0f), 2.0f * M_PI);
 
-  if (theta < 0.0f) {
+  theta = fmodf(theta + M_PI, 2.0f * M_PI);
+  if (theta < 0)
     theta += 2.0f * M_PI;
-  }
+
+  theta -= M_PI;
 
   return theta;
 };
