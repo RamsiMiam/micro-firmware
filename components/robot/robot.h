@@ -6,6 +6,7 @@
 extern "C" {
 #endif
 
+esp_err_t robot_init(void);
 
 #ifdef __cplusplus
 }

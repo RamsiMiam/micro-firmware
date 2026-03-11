@@ -45,9 +45,6 @@ esp_err_t odometry_init(motor_t *motors) {
   if (pose_mutex == NULL)
     return ESP_FAIL;
 
-  if (imu_init(SDA_GPIO, SCL_GPIO, INT_MPU) != ESP_OK)
-    return ESP_FAIL;
-
   robot_pose.theta = 0.0f;
   robot_pose.x = 0.0f;
   robot_pose.y = 0.0f;

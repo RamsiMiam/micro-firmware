@@ -3,5 +3,5 @@ idf_component_register(
         "robot.c"
     INCLUDE_DIRS
         "."
-    REQUIRES position_controller odometry motor_controller config
+    REQUIRES imu position_controller odometry motor_controller telemetry config
 )
